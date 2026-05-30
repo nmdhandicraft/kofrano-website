@@ -88,6 +88,7 @@ function initHeroScene() {
     loader.load("assets/models/NMD-305.glb", 
         (gltf) => {
             heroModel = gltf.scene;
+            console.log(heroModel);
             
             // Center model
             const box = new THREE.Box3().setFromObject(heroModel);
