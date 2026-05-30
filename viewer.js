@@ -48,7 +48,7 @@ function initHeroScene() {
 
     // Camera
     heroCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-    heroCamera.position.set(0, 0.5, 6);
+    heroCamera.position.set(0, 1.5, 12);
 
     // Renderer
     heroRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -95,9 +95,11 @@ function initHeroScene() {
             heroModel.position.sub(center);
             
             // Adjust position and rotation
-            heroModel.position.y = 0.2;
-            heroModel.rotation.set(0.15, -Math.PI / 4, 0.05);
-            heroModel.scale.set(1.5, 1.5, 1.5);
+            heroModel.position.set(0, -1.2, 0);
+
+heroModel.rotation.set(0, -Math.PI / 4, 0);
+
+heroModel.scale.set(0.02, 0.02, 0.02);
             
             // Shadow mapping and material tuning
             heroModel.traverse((child) => {
