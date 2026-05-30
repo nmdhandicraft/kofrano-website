@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOFRANO — The Future of Premium Travel</title>
+    <meta name="description" content="KOFRANO luxury travel luggage. Engineered for modern explorers. Discover the collection of premium European travel suitcases under NMDTrendz.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Minimal Luxury Navigation -->
+    <header id="main-header">
+        <ul class="nav-links">
+            <li><a href="#hero" class="active">Home</a></li>
+            <li><a href="#configurator">Collection</a></li>
+            <li><a href="#technology">Technology</a></li>
+            <li><a href="#story">Story</a></li>
+        </ul>
+        <div class="logo-container">
+            <a href="#" class="logo">KOFRANO<span>.com</span></a>
+        </div>
+        <div class="nav-right">
+            <button class="cart-icon-btn" id="open-cart-btn" aria-label="Open Cart">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6zM3 6h18M16 10a4 4 0 0 1-8 0" />
+                </svg>
+                <span class="cart-count" id="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Section 1 — Cinematic Hero -->
+    <section id="hero">
+        <div id="hero-canvas-container"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">TRAVEL REDEFINED</h1>
+            <p class="hero-subtitle">Engineered for modern explorers.</p>
+            <a href="#configurator" class="btn-primary">Explore Collection</a>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Section 2 — Interactive 3D Product Customizer -->
+    <section id="configurator">
+        <div class="config-viewer">
+            <div id="config-canvas-container"></div>
+            <div class="viewer-hint">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 8l-4 4 4 4M8 12h8" />
+                </svg>
+                <span>360° Interactive Canvas — Drag to rotate, Scroll to zoom</span>
+            </div>
+        </div>
+        <div class="config-panel">
+            <div class="brand-label">KOFRANO GERMANY</div>
+            <h1 id="product-title">Cabin S — TC305</h1>
+            <div class="price">
+                <span id="strike-price">€850</span>
+                <span id="current-price">€590</span>
+            </div>
+            
+            <p class="description">
+                Crafted for style-conscious travelers. Featuring a front-open design for immediate access, premium dual-spinner motion systems, a highly secure integrated locking mechanism, and a multi-layered impact shell built to withstand the rigors of modern exploration.
+            </p>
+
+            <!-- Color Selection -->
+            <div class="options-section">
+                <div class="section-title">Select Color</div>
+                <div class="swatches">
+                    <button class="swatch-btn active" data-color="black" data-name="Matte Black"><span></span></button>
+                    <button class="swatch-btn" data-color="silver" data-name="Titanium Silver"><span></span></button>
+                    <button class="swatch-btn" data-color="navy" data-name="Deep Navy"><span></span></button>
+                    <button class="swatch-btn" data-color="champagne" data-name="Champagne Gold"><span></span></button>
+                    <button class="swatch-btn" data-color="banana" data-name="Banana Gold"><span></span></button>
+                </div>
+            </div>
+
+            <!-- Size Selection -->
+            <div class="options-section">
+                <div class="section-title">Select Size</div>
+                <div class="sizes">
+                    <button class="size-btn active" data-size="cabin" data-price="590" data-strike="850">
+                        Cabin S
+                        <span>40L / 3.4kg</span>
+                    </button>
+                    <button class="size-btn" data-size="checkin" data-price="720" data-strike="980">
+                        Check-In M
+                        <span>75L / 4.2kg</span>
+                    </button>
+                    <button class="size-btn" data-size="trunk" data-price="890" data-strike="1200">
+                        Trunk L
+                        <span>110L / 5.1kg</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="purchase-area">
+                <button class="btn-primary" id="add-to-cart-btn">
+                    Add to Cart
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+                <div class="cart-trust-badge">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                    <span>Secure Checkout. 5-Year Global Warranty Included.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3 — Exploded Component View & Tech Specs -->
+    <section id="technology">
+        <div class="tech-sticky-viewer">
+            <div id="tech-canvas-container"></div>
+        </div>
+        <div class="tech-scroll-content">
+            <div class="tech-card" id="tech-shell">
+                <div class="brand-label">Engineering</div>
+                <h2>KOFRANO Shell Technology™</h2>
+                <p>
+                    Built with German-engineered polycarbonate compound layers. The outer shell deflects impacts, the structural reinforcement layer redistributes kinetic stress, and the premium shock-absorbent interior keeps your belongings perfectly protected in high-pressure aircraft holds.
+                </p>
+                <ul class="tech-specs-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        <span>Multi-layer High-impact Polycarbonate</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span>Scratch-resistant Micro-matte finish</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="tech-card" id="tech-wheels">
+                <div class="brand-label">Mobility</div>
+                <h2>KOFRANO Motion System™</h2>
+                <p>
+                    Experience weightless travel. Custom-designed dual-spinner wheels rotate silently with zero friction, absorbing micro-vibrations from pavements. They rotate as you scroll to represent active motion.
+                </p>
+                <ul class="tech-specs-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4 12h4M16 12h4"/></svg>
+                        <span>Ultra-silent Dual Ball-bearing spinners</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23 12a11 11 0 1 1-22 0 11 11 0 0 1 22 0z"/></svg>
+                        <span>Shock-absorbing rubberized treads</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4 — Luxury Lifestyle -->
+    <section id="lifestyle">
+        <div class="section-header">
+            <div class="brand-label">LIFESTYLE</div>
+            <h2 class="hero-title" style="font-size: clamp(2rem, 5vw, 4.5rem); text-align: left; background: none; -webkit-text-fill-color: initial;">Sell the Dream</h2>
+            <p>Travel is more than moving from point A to point B. It is an exploration of self. KOFRANO complements your journey in the world's most luxurious coordinates.</p>
+        </div>
+        <div class="lifestyle-grid">
+            <div class="lifestyle-item col-6-left">
+                <img src="assets/images/IMG_1481.jpg" alt="KOFRANO luggage standing in elegant hotel suite">
+                <div class="lifestyle-overlay">
+                    <span class="lifestyle-tag">Hotel Splendido</span>
+                    <h3 class="lifestyle-location">Milan, Italy</h3>
+                </div>
+            </div>
+            <div class="lifestyle-item col-6-right">
+                <img src="assets/images/banana_luggage.png" alt="KOFRANO premium banana carbon-fiber suitcase on dark floor">
+                <div class="lifestyle-overlay">
+                    <span class="lifestyle-tag">Exquisite Design Collection</span>
+                    <h3 class="lifestyle-location">Paris, France</h3>
+                </div>
+            </div>
+            <div class="lifestyle-item col-8">
+                <img src="assets/images/NMD-305.png" alt="Multiple KOFRANO suitcases standing in a row">
+                <div class="lifestyle-overlay">
+                    <span class="lifestyle-tag">Terminal A Terminal Lounge</span>
+                    <h3 class="lifestyle-location">Zurich Airport, Switzerland</h3>
+                </div>
+            </div>
+            <div class="lifestyle-item col-4">
+                <img src="assets/images/banana_luggage.png" alt="Yellow banana luxury luggage custom design render">
+                <div class="lifestyle-overlay">
+                    <span class="lifestyle-tag">Futuristic Terminal Hub</span>
+                    <h3 class="lifestyle-location">Berlin, Germany</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5 — Collection Showcase (Horizontal Scroll) -->
+    <section id="collection">
+        <div class="section-header">
+            <div class="brand-label">THE ECOSYSTEM</div>
+            <h2 class="hero-title" style="font-size: clamp(2rem, 5vw, 4.5rem); text-align: left; background: none; -webkit-text-fill-color: initial; margin-bottom: 2rem;">The Suite</h2>
+        </div>
+        
+        <div class="horizontal-scroll-container" id="horizontal-container">
+            <div class="collection-card">
+                <div class="card-img-wrapper">
+                    <img src="assets/images/NMD-305.png" alt="KOFRANO Cabin S">
+                </div>
+                <div class="card-content">
+                    <h3>Cabin S — Front Open</h3>
+                    <p class="card-desc">Perfect size for weekend travel. Features a front pocket for immediate laptops and passport access.</p>
+                    <div class="card-footer">
+                        <span class="card-price">€590</span>
+                        <button class="quick-add-btn" data-id="cabin" data-name="Cabin S" data-price="590" data-img="assets/images/NMD-305.png">
+                            Quick Add
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 5v14M5 12h14"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="collection-card">
+                <div class="card-img-wrapper">
+                    <img src="assets/images/banana_luggage.png" alt="KOFRANO Banana Special Edition">
+                </div>
+                <div class="card-content">
+                    <h3>Special Edition — Banana Gold</h3>
+                    <p class="card-desc">Showcase your individuality. An exquisite edition combining premium carbon fiber with custom golden accents.</p>
+                    <div class="card-footer">
+                        <span class="card-price">€690</span>
+                        <button class="quick-add-btn" data-id="banana-gold" data-name="Special Edition - Banana Gold" data-price="690" data-img="assets/images/banana_luggage.png">
+                            Quick Add
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 5v14M5 12h14"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collection-card">
+                <div class="card-img-wrapper">
+                    <img src="assets/images/IMG_1481.jpg" alt="KOFRANO Check-In M">
+                </div>
+                <div class="card-content">
+                    <h3>Check-In M — Double Trunk</h3>
+                    <p class="card-desc">Expansive space for extended travel. Engineered structural shell designed to fit massive volumes.</p>
+                    <div class="card-footer">
+                        <span class="card-price">€720</span>
+                        <button class="quick-add-btn" data-id="checkin" data-name="Check-In M" data-price="720" data-img="assets/images/IMG_1481.jpg">
+                            Quick Add
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 5v14M5 12h14"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collection-card">
+                <div class="card-img-wrapper">
+                    <img src="assets/images/NMD-305.png" alt="KOFRANO Trunk L">
+                </div>
+                <div class="card-content">
+                    <h3>Trunk L — Long Haul</h3>
+                    <p class="card-desc">The pinnacle of travel luxury. Featuring an extra wide handle and heavy-duty suspension spinners.</p>
+                    <div class="card-footer">
+                        <span class="card-price">€890</span>
+                        <button class="quick-add-btn" data-id="trunk" data-name="Trunk L" data-price="890" data-img="assets/images/NMD-305.png">
+                            Quick Add
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 5v14M5 12h14"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6 — Brand Story Timeline -->
+    <section id="story">
+        <div class="section-header" style="margin: 0 auto 3rem; text-align: center;">
+            <div class="brand-label">THE LEGACY</div>
+            <h2 class="hero-title" style="font-size: clamp(2rem, 5vw, 4.5rem); background: none; -webkit-text-fill-color: initial;">The Story</h2>
+            <p>From a vision of redefining how we travel, to a reality of high-performance engineering.</p>
+        </div>
+        
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-year">2026</div>
+                <div class="timeline-title">KOFRANO Founded</div>
+                <div class="timeline-desc">
+                    Established under the NMDTrendz ecosystem. Created by design engineers in Germany with a vision of merging extreme luggage durability with automotive aesthetics.
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-year">2026</div>
+                <div class="timeline-title">The First Prototype</div>
+                <div class="timeline-desc">
+                    The TC-305 Front Open Cabin bag was designed, integrating a front-loading quick laptop drawer and shock-absorbing custom wheel mounts.
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-year">2026</div>
+                <div class="timeline-title">Banana Special Edition Launch</div>
+                <div class="timeline-desc">
+                    Introducing unique banana styling, blending luxury champagne gold frame design with vibrant matte banana yellow carbon-fiber composite.
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="timeline-year">2026</div>
+                <div class="timeline-title">Global Expansion</div>
+                <div class="timeline-desc">
+                    Partnering with premium European airport hubs to offer high-end travel kits, luxury luggage service stations, and the ultimate travel experience.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide-out Cart Drawer -->
+    <div class="cart-drawer-overlay" id="cart-overlay"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart-btn" id="close-cart-btn" aria-label="Close Cart">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="cart-items-wrapper" id="cart-items-container">
+            <!-- Items injected by JS -->
+            <div class="cart-empty-message" id="cart-empty-msg">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z"/>
+                    <path d="M3 6h18"/>
+                </svg>
+                <p>Your cart is empty.</p>
+                <p style="font-size: 0.8rem;">Add flagship luggage to begin your premium travel experience.</p>
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-subtotal-row">
+                <span class="cart-subtotal-label">Subtotal</span>
+                <span class="cart-subtotal-val" id="cart-subtotal">€0</span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+            <div class="cart-trust-badge">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <span>Express Checkout (Apple Pay, Google Pay, Credit Card)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Corporate Footer -->
+    <footer>
+        <div class="footer-top">
+            <div class="footer-brand">
+                <h2>KOFRANO</h2>
+                <p>Engineered premium luggage designed for travelers who appreciate the balance between durability and aesthetics.</p>
+                <div class="parent-domain">NMDTrendz.com</div>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Ecosystem</h4>
+                <ul>
+                    <li><a href="#configurator">Luggage</a></li>
+                    <li><a href="#story">Company Story</a></li>
+                    <li><a href="#technology">German Engineering</a></li>
+                    <li><a href="#lifestyle">Travel Journal</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h4>NMDTrendz Corp</h4>
+                <ul>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Investor Relations</a></li>
+                    <li><a href="#">Press Room</a></li>
+                    <li><a href="#">Support Center</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-newsletter">
+                <h4 style="font-size: 0.85rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem;">Stay Updated</h4>
+                <p>Join the inner circle of luxury modern explorers. Receive updates on new collections and secret coordinates.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed to KOFRANO travel alerts.');">
+                    <input type="email" placeholder="Your email address" required aria-label="Email address">
+                    <button type="submit" aria-label="Subscribe">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="22" y1="2" x2="11" y2="13"/>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 KOFRANO Travel Brand. Under NMDTrendz.com. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookie settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Three.js & Animation CDNs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom App Code -->
+    <script src="js/viewer.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
