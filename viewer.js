@@ -96,11 +96,11 @@ function initHeroScene() {
             heroModel.position.sub(center);
             
             // Adjust position and rotation
-            heroModel.position.set(0, -0.5, 0);
+            heroModel.position.set(0, 0, 0);
 
-heroModel.rotation.set(0, -Math.PI / 4, 0);
+heroModel.rotation.set(0,0,0);
 
-heroModel.scale.set(0.005, 0.005, 0.005);
+heroModel.scale.set(1,1,1);
             
             // Shadow mapping and material tuning
             heroModel.traverse((child) => {
