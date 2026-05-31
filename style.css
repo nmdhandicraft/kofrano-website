@@ -130,7 +130,7 @@ header {
     align-items: center;
     padding: 1.5rem 3rem;
     background: linear-gradient(to bottom, rgba(10,10,10,0.8) 0%, rgba(10,10,10,0) 100%);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(2px);
     transition: var(--transition-smooth);
 }
 
@@ -614,7 +614,7 @@ section {
     z-index: 10;
     background-color: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(3px);
     padding: 0.6rem 1.2rem;
     display: flex;
     align-items: center;
