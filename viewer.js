@@ -14,6 +14,79 @@ const colorsMap = {
 
 let activeColor = "black";
 
+// =========================================================================
+// Environment Map Generator — Creates studio-quality reflections
+// =========================================================================
+function createStudioEnvironment(renderer) {
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    pmremGenerator.compileCubemapShader();
+
+    // Create a simple studio environment scene
+    const envScene = new THREE.Scene();
+
+    // Soft warm top light
+    const topLight = new THREE.Mesh(
+        new THREE.PlaneGeometry(10, 10),
+        new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide })
+    );
+    topLight.position.set(0, 5, 0);
+    topLight.rotation.x = Math.PI / 2;
+    envScene.add(topLight);
+
+    // Warm side accent
+    const sideLight = new THREE.Mesh(
+        new THREE.PlaneGeometry(6, 6),
+        new THREE.MeshBasicMaterial({ color: 0xC6A26B, side: THREE.DoubleSide })
+    );
+    sideLight.position.set(-5, 1, 0);
+    sideLight.rotation.y = Math.PI / 2;
+    envScene.add(sideLight);
+
+    // Cool fill light from opposite side
+    const fillLight = new THREE.Mesh(
+        new THREE.PlaneGeometry(6, 6),
+        new THREE.MeshBasicMaterial({ color: 0x8899bb, side: THREE.DoubleSide })
+    );
+    fillLight.position.set(5, 1, 2);
+    fillLight.rotation.y = -Math.PI / 2;
+    envScene.add(fillLight);
+
+    // Dark floor
+    const floorMat = new THREE.Mesh(
+        new THREE.PlaneGeometry(20, 20),
+        new THREE.MeshBasicMaterial({ color: 0x111111, side: THREE.DoubleSide })
+    );
+    floorMat.position.set(0, -3, 0);
+    floorMat.rotation.x = Math.PI / 2;
+    envScene.add(floorMat);
+
+    const envMap = pmremGenerator.fromScene(envScene, 0.04).texture;
+    pmremGenerator.dispose();
+
+    return envMap;
+}
+
+// =========================================================================
+// Loading Indicator
+// =========================================================================
+function showLoading(container) {
+    const loader = document.createElement("div");
+    loader.className = "model-loader";
+    loader.innerHTML = `
+        <div class="loader-spinner"></div>
+        <span>Loading 3D Model...</span>
+    `;
+    container.appendChild(loader);
+    return loader;
+}
+
+function hideLoading(loaderEl) {
+    if (loaderEl && loaderEl.parentNode) {
+        loaderEl.style.opacity = "0";
+        setTimeout(() => loaderEl.remove(), 500);
+    }
+}
+
 // Initialization
 document.addEventListener("DOMContentLoaded", () => {
     initHeroScene();
@@ -42,6 +115,8 @@ function initHeroScene() {
     const container = document.getElementById("hero-canvas-container");
     if (!container) return;
 
+    const loadingEl = showLoading(container);
+
     // Scene setup
     heroScene = new THREE.Scene();
     heroScene.fog = new THREE.FogExp2(0x030303, 0.04);
@@ -58,7 +133,12 @@ function initHeroScene() {
     heroRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
     heroRenderer.toneMapping = THREE.ACESFilmicToneMapping;
     heroRenderer.toneMappingExposure = 1.2;
+    heroRenderer.outputEncoding = THREE.sRGBEncoding;
     container.appendChild(heroRenderer.domElement);
+
+    // Generate environment map for realistic reflections
+    const envMap = createStudioEnvironment(heroRenderer);
+    heroScene.environment = envMap;
 
     // Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
@@ -83,9 +163,9 @@ function initHeroScene() {
     // Particle Background
     createParticles(heroScene);
 
-    // Load Model
+    // Load Model — correct path matching GitHub repo structure
     const loader = new THREE.GLTFLoader();
-    loader.load("./NMD-305.glb", 
+    loader.load("assets/models/NMD-305.glb", 
         (gltf) => {
             heroModel = gltf.scene;
             
@@ -99,17 +179,17 @@ function initHeroScene() {
             heroModel.rotation.set(0.15, -Math.PI / 4, 0.05);
             heroModel.scale.set(1.5, 1.5, 1.5);
             
-            // Shadow mapping and material tuning
+            // Shadow mapping and premium material tuning
             heroModel.traverse((child) => {
                 if (child.isMesh) {
                     child.castShadow = true;
                     child.receiveShadow = true;
                     // Apply premium properties
                     if (child.material) {
+                        child.material.envMap = envMap;
                         child.material.envMapIntensity = 1.5;
-                        const matName = (child.material?.name || "").toLowerCase();
-                        const meshName = (child.name || "").toLowerCase();
-                        if (matName.includes("orange") || meshName.includes("orange")) {
+                        child.material.needsUpdate = true;
+                        if (child.material.name.toLowerCase().includes("orange") || child.name.toLowerCase().includes("orange")) {
                             child.material.color.setHex(0xC6A26B); // Soft gold details
                             child.material.roughness = 0.3;
                         }
@@ -118,6 +198,7 @@ function initHeroScene() {
             });
 
             heroScene.add(heroModel);
+            hideLoading(loadingEl);
             
             // Enter animation using GSAP
             gsap.from(heroModel.position, {
@@ -134,11 +215,21 @@ function initHeroScene() {
             gsap.to(".hero-subtitle", { opacity: 1, y: 0, duration: 1.5, delay: 0.8, ease: "power3.out" });
             gsap.to("#hero .btn-primary", { opacity: 1, y: 0, duration: 1.5, delay: 1.1, ease: "power3.out" });
         },
-        undefined,
-        (error) => console.error("Error loading Hero model:", error)
+        (progress) => {
+            // Show loading progress
+            if (progress.lengthComputable) {
+                const pct = Math.round((progress.loaded / progress.total) * 100);
+                const spinner = loadingEl.querySelector("span");
+                if (spinner) spinner.textContent = `Loading 3D Model... ${pct}%`;
+            }
+        },
+        (error) => {
+            console.error("Error loading Hero model:", error);
+            hideLoading(loadingEl);
+        }
     );
 
-    // Mouse interactive movement
+    // Mouse interactive movement — FIXED: was 'mousey' (typo)
     let mouseX = 0;
     let mouseY = 0;
     window.addEventListener("mousemove", (e) => {
@@ -158,7 +249,7 @@ function initHeroScene() {
             heroModel.position.y = 0.2 + Math.sin(elapsedTime * 0.8) * 0.12;
             
             // Continuous rotation
-            heroModel.rotation.y = -Math.PI / 4 + elapsedTime * 0.25;
+            heroModel.rotation.y += 0.003;
             
             // Mouse interactive parallax
             heroCamera.position.x += (mouseX * 1.5 - heroCamera.position.x) * 0.05;
@@ -226,6 +317,8 @@ function initConfigScene() {
     const container = document.getElementById("config-canvas-container");
     if (!container) return;
 
+    const loadingEl = showLoading(container);
+
     // Scene
     configScene = new THREE.Scene();
 
@@ -241,7 +334,12 @@ function initConfigScene() {
     configRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
     configRenderer.toneMapping = THREE.ACESFilmicToneMapping;
     configRenderer.toneMappingExposure = 1.3;
+    configRenderer.outputEncoding = THREE.sRGBEncoding;
     container.appendChild(configRenderer.domElement);
+
+    // Generate environment map
+    const envMap = createStudioEnvironment(configRenderer);
+    configScene.environment = envMap;
 
     // Lights
     const ambient = new THREE.AmbientLight(0xffffff, 0.6);
@@ -281,7 +379,7 @@ function initConfigScene() {
 
     // Load Model
     const loader = new THREE.GLTFLoader();
-    loader.load("./NMD-305.glb", 
+    loader.load("assets/models/NMD-305.glb", 
         (gltf) => {
             configModel = gltf.scene;
             
@@ -297,16 +395,28 @@ function initConfigScene() {
                     child.castShadow = true;
                     child.receiveShadow = true;
                     if (child.material) {
+                        child.material.envMap = envMap;
                         child.material.envMapIntensity = 1.8;
+                        child.material.needsUpdate = true;
                     }
                 }
             });
 
             configScene.add(configModel);
             updateModelColor(activeColor); // Initial color setup
+            hideLoading(loadingEl);
         },
-        undefined,
-        (error) => console.error("Error loading Config model:", error)
+        (progress) => {
+            if (progress.lengthComputable) {
+                const pct = Math.round((progress.loaded / progress.total) * 100);
+                const spinner = loadingEl.querySelector("span");
+                if (spinner) spinner.textContent = `Loading 3D Model... ${pct}%`;
+            }
+        },
+        (error) => {
+            console.error("Error loading Config model:", error);
+            hideLoading(loadingEl);
+        }
     );
 
     // Size Switcher Interactions
@@ -369,8 +479,8 @@ function updateModelColor(colorName) {
     
     configModel.traverse((child) => {
         if (child.isMesh && child.material) {
-            const matName = (child.material?.name || "").toLowerCase();
-            const meshName = (child.name || "").toLowerCase();
+            const matName = child.material.name.toLowerCase();
+            const meshName = child.name.toLowerCase();
             
             // We want to color only the main body outer shell.
             // Typically, handles, locks, wheels, and frame accents should remain black/metallic/gold.
@@ -383,7 +493,7 @@ function updateModelColor(colorName) {
                                meshName.includes("logo") || meshName.includes("rubber") || 
                                matName.includes("metal") || matName.includes("aluminum");
             
-            if (!isAccessory) {
+            if (!isAccessory && (matName.includes("body") || matName.includes("shell") || matName.includes("case") || matName.includes("plastic") || matName.includes("material") || matName.includes("polycarbonate") || child.material.color.r < 0.2)) {
                 // Clone material to avoid cross-model pollution
                 if (!child.material._originalCloned) {
                     child.material = child.material.clone();
@@ -419,6 +529,8 @@ function initTechScene() {
     const container = document.getElementById("tech-canvas-container");
     if (!container) return;
 
+    const loadingEl = showLoading(container);
+
     // Scene
     techScene = new THREE.Scene();
 
@@ -432,7 +544,12 @@ function initTechScene() {
     techRenderer.setSize(container.clientWidth, container.clientHeight);
     techRenderer.shadowMap.enabled = true;
     techRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+    techRenderer.outputEncoding = THREE.sRGBEncoding;
     container.appendChild(techRenderer.domElement);
+
+    // Generate environment map
+    const envMap = createStudioEnvironment(techRenderer);
+    techScene.environment = envMap;
 
     // Lights
     const ambient = new THREE.AmbientLight(0xffffff, 0.5);
@@ -454,7 +571,7 @@ function initTechScene() {
 
     // Load Model
     const loader = new THREE.GLTFLoader();
-    loader.load("./NMD-305.glb", 
+    loader.load("assets/models/NMD-305.glb", 
         (gltf) => {
             techModel = gltf.scene;
             
@@ -469,12 +586,13 @@ function initTechScene() {
                 if (child.isMesh) {
                     if (child.material) {
                         child.material = child.material.clone();
+                        child.material.envMap = envMap;
+                        child.material.envMapIntensity = 1.5;
+                        child.material.needsUpdate = true;
                         // Color body shell matte black/gold
-                        const matName = (child.material?.name || "").toLowerCase();
-                        const meshName = (child.name || "").toLowerCase();
-                        if (meshName.includes("orange") || matName.includes("orange")) {
+                        if (child.name.toLowerCase().includes("orange") || child.material.name.toLowerCase().includes("orange")) {
                             child.material.color.setHex(0xC6A26B); // Brand Gold
-                        } else if (meshName.includes("body") || meshName.includes("shell")) {
+                        } else if (child.name.toLowerCase().includes("body") || child.name.toLowerCase().includes("shell")) {
                             child.material.color.setHex(0x0f0f0f); // Matte black body
                             child.material.roughness = 0.45;
                         }
@@ -484,7 +602,7 @@ function initTechScene() {
                     originalPositions.set(child, child.position.clone());
 
                     // Sort parts for GSAP exploded view
-                    const name = (child.name || "").toLowerCase();
+                    const name = child.name.toLowerCase();
                     if (name.includes("wheel") || name.includes("caster")) {
                         wheels.push(child);
                     }
@@ -493,9 +611,19 @@ function initTechScene() {
 
             techScene.add(techModel);
             setupScrollAnimations(techModel, originalPositions, wheels);
+            hideLoading(loadingEl);
         },
-        undefined,
-        (error) => console.error("Error loading Tech model:", error)
+        (progress) => {
+            if (progress.lengthComputable) {
+                const pct = Math.round((progress.loaded / progress.total) * 100);
+                const spinner = loadingEl.querySelector("span");
+                if (spinner) spinner.textContent = `Loading 3D Model... ${pct}%`;
+            }
+        },
+        (error) => {
+            console.error("Error loading Tech model:", error);
+            hideLoading(loadingEl);
+        }
     );
 
     // Animation Loop
@@ -507,7 +635,7 @@ function initTechScene() {
 }
 
 function setupScrollAnimations(model, originalPositions, wheels) {
-    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+    if (!gsap || !ScrollTrigger) return;
     
     // Register scroll trigger
     gsap.registerPlugin(ScrollTrigger);
@@ -519,7 +647,7 @@ function setupScrollAnimations(model, originalPositions, wheels) {
             start: "top top",
             end: "bottom bottom",
             scrub: 0.5,
-            pin: true
+            pin: ".tech-sticky-viewer"
         }
     });
 

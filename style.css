@@ -22,6 +22,41 @@
     --glass-border: rgba(255, 255, 255, 0.08);
 }
 
+/* 3D Model Loading Indicator */
+.model-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    transition: opacity 0.5s ease;
+}
+
+.model-loader span {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+}
+
+.loader-spinner {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--glass-border);
+    border-top-color: var(--color-champagne);
+    border-radius: 50%;
+    animation: loaderSpin 0.8s linear infinite;
+}
+
+@keyframes loaderSpin {
+    to { transform: rotate(360deg); }
+}
+
 /* Reset & Global */
 * {
     margin: 0;
