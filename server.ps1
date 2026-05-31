@@ -8,7 +8,7 @@ $listener.Prefixes.Add("http://localhost:$port/")
 try {
     $listener.Start()
     Write-Host ""
-    Write-Host "==============================================" -ForegroundColor Champagne
+    Write-Host "==============================================" -ForegroundColor Yellow
     Write-Host "  KOFRANO Luxury Web Experience Server started" -ForegroundColor Green
     Write-Host "  Local Address: http://localhost:$port/" -ForegroundColor Cyan
     Write-Host "  Press Ctrl+C in this terminal to stop the server" -ForegroundColor Yellow

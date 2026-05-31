@@ -50,16 +50,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const cartOverlay = document.getElementById("cart-overlay");
     const cartDrawer = document.getElementById("cart-drawer");
 
-    openCartBtn.addEventListener("click", openCart);
-    closeCartBtn.addEventListener("click", closeCart);
-    cartOverlay.addEventListener("click", closeCart);
+    if (openCartBtn) {
+        openCartBtn.addEventListener("click", openCart);
+    }
+
+    if (closeCartBtn) {
+        closeCartBtn.addEventListener("click", closeCart);
+    }
+
+    if (cartOverlay) {
+        cartOverlay.addEventListener("click", closeCart);
+    }
 
     function openCart() {
+        if (!cartDrawer || !cartOverlay) return;
         cartDrawer.classList.add("open");
         cartOverlay.classList.add("open");
     }
 
     function closeCart() {
+        if (!cartDrawer || !cartOverlay) return;
         cartDrawer.classList.remove("open");
         cartOverlay.classList.remove("open");
     }
@@ -156,6 +166,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const emptyMsg = document.getElementById("cart-empty-msg");
         const subtotalVal = document.getElementById("cart-subtotal");
         const cartCount = document.getElementById("cart-count");
+
+        if (!cartContainer || !emptyMsg || !subtotalVal || !cartCount) return;
         
         // Remove existing items (keep empty message template)
         document.querySelectorAll(".cart-item").forEach(item => item.remove());
@@ -204,13 +216,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Checkout Alert
-    document.getElementById("checkout-btn").addEventListener("click", () => {
-        if (cart.length === 0) {
-            alert("Your cart is empty. Choose a luxury suitcase to checkout.");
-            return;
-        }
-        alert("Redirecting to NMDTrendz.com secure payment gateway... Integration successful!");
-    });
+    const checkoutBtn = document.getElementById("checkout-btn");
+
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener("click", () => {
+            if (cart.length === 0) {
+                alert("Your cart is empty.");
+                return;
+            }
+            alert("Checkout integration placeholder");
+        });
+    }
 
 
     // 5. GSAP Collection Horizontal Scroll (Desktop)
@@ -222,18 +238,20 @@ document.addEventListener("DOMContentLoaded", () => {
         // MatchMedia to run horizontal scroll only on desktop/tablets (min-width: 1025px)
         ScrollTrigger.matchMedia({
             "(min-width: 1025px)": function() {
-                gsap.to(container, {
-                    x: () => -(container.scrollWidth - window.innerWidth + window.innerWidth * 0.1),
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: "#collection",
-                        start: "top top",
-                        end: () => `+=${container.scrollWidth}`,
-                        scrub: 1,
-                        pin: true,
-                        invalidateOnRefresh: true
-                    }
-                });
+                if (container) {
+                    gsap.to(container, {
+                        x: () => -(container.scrollWidth - window.innerWidth + window.innerWidth * 0.1),
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: "#collection",
+                            start: "top top",
+                            end: () => `+=${container.scrollWidth}`,
+                            scrub: 1,
+                            pin: true,
+                            invalidateOnRefresh: true
+                        }
+                    });
+                }
             }
         });
 

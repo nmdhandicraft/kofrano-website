@@ -48,7 +48,7 @@ function initHeroScene() {
 
     // Camera
     heroCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-    heroCamera.position.set(0, 0, 100);
+    heroCamera.position.set(0, 0.5, 6);
 
     // Renderer
     heroRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -85,30 +85,20 @@ function initHeroScene() {
 
     // Load Model
     const loader = new THREE.GLTFLoader();
-    loader.load("assets/models/NMD-305.glb", 
+    loader.load("./NMD-305.glb", 
         (gltf) => {
             heroModel = gltf.scene;
-           console.log("MODEL", heroModel);
-
-const box = new THREE.Box3().setFromObject(heroModel);
-
-console.log("MIN", box.min);
-console.log("MAX", box.max);
-
-const size = new THREE.Vector3();
-box.getSize(size);
-
-console.log("SIZE", size);
-
-const center = new THREE.Vector3();
-box.getCenter(center);
-
-console.log("CENTER", center);
-
-heroModel.position.set(0,0,0);
-heroModel.rotation.set(0,0,0);
-heroModel.scale.set(10,10,10);
-// heroModel.position.sub(center);
+            
+            // Center model
+            const box = new THREE.Box3().setFromObject(heroModel);
+            const center = box.getCenter(new THREE.Vector3());
+            heroModel.position.sub(center);
+            
+            // Adjust position and rotation
+            heroModel.position.y = 0.2;
+            heroModel.rotation.set(0.15, -Math.PI / 4, 0.05);
+            heroModel.scale.set(1.5, 1.5, 1.5);
+            
             // Shadow mapping and material tuning
             heroModel.traverse((child) => {
                 if (child.isMesh) {
@@ -117,7 +107,9 @@ heroModel.scale.set(10,10,10);
                     // Apply premium properties
                     if (child.material) {
                         child.material.envMapIntensity = 1.5;
-                        if (child.material.name.toLowerCase().includes("orange") || child.name.toLowerCase().includes("orange")) {
+                        const matName = (child.material?.name || "").toLowerCase();
+                        const meshName = (child.name || "").toLowerCase();
+                        if (matName.includes("orange") || meshName.includes("orange")) {
                             child.material.color.setHex(0xC6A26B); // Soft gold details
                             child.material.roughness = 0.3;
                         }
@@ -166,7 +158,7 @@ heroModel.scale.set(10,10,10);
             heroModel.position.y = 0.2 + Math.sin(elapsedTime * 0.8) * 0.12;
             
             // Continuous rotation
-            heroModel.rotation.y += 0.003;
+            heroModel.rotation.y = -Math.PI / 4 + elapsedTime * 0.25;
             
             // Mouse interactive parallax
             heroCamera.position.x += (mouseX * 1.5 - heroCamera.position.x) * 0.05;
@@ -289,7 +281,7 @@ function initConfigScene() {
 
     // Load Model
     const loader = new THREE.GLTFLoader();
-    loader.load("assets/models/NMD-305.glb", 
+    loader.load("./NMD-305.glb", 
         (gltf) => {
             configModel = gltf.scene;
             
@@ -377,8 +369,8 @@ function updateModelColor(colorName) {
     
     configModel.traverse((child) => {
         if (child.isMesh && child.material) {
-            const matName = child.material.name.toLowerCase();
-            const meshName = child.name.toLowerCase();
+            const matName = (child.material?.name || "").toLowerCase();
+            const meshName = (child.name || "").toLowerCase();
             
             // We want to color only the main body outer shell.
             // Typically, handles, locks, wheels, and frame accents should remain black/metallic/gold.
@@ -391,7 +383,7 @@ function updateModelColor(colorName) {
                                meshName.includes("logo") || meshName.includes("rubber") || 
                                matName.includes("metal") || matName.includes("aluminum");
             
-            if (!isAccessory && (matName.includes("body") || matName.includes("shell") || matName.includes("case") || matName.includes("plastic") || matName.includes("material") || matName.includes("polycarbonate") || child.material.color.r < 0.2)) {
+            if (!isAccessory) {
                 // Clone material to avoid cross-model pollution
                 if (!child.material._originalCloned) {
                     child.material = child.material.clone();
@@ -462,7 +454,7 @@ function initTechScene() {
 
     // Load Model
     const loader = new THREE.GLTFLoader();
-    loader.load("assets/models/NMD-305.glb", 
+    loader.load("./NMD-305.glb", 
         (gltf) => {
             techModel = gltf.scene;
             
@@ -478,9 +470,11 @@ function initTechScene() {
                     if (child.material) {
                         child.material = child.material.clone();
                         // Color body shell matte black/gold
-                        if (child.name.toLowerCase().includes("orange") || child.material.name.toLowerCase().includes("orange")) {
+                        const matName = (child.material?.name || "").toLowerCase();
+                        const meshName = (child.name || "").toLowerCase();
+                        if (meshName.includes("orange") || matName.includes("orange")) {
                             child.material.color.setHex(0xC6A26B); // Brand Gold
-                        } else if (child.name.toLowerCase().includes("body") || child.name.toLowerCase().includes("shell")) {
+                        } else if (meshName.includes("body") || meshName.includes("shell")) {
                             child.material.color.setHex(0x0f0f0f); // Matte black body
                             child.material.roughness = 0.45;
                         }
@@ -490,7 +484,7 @@ function initTechScene() {
                     originalPositions.set(child, child.position.clone());
 
                     // Sort parts for GSAP exploded view
-                    const name = child.name.toLowerCase();
+                    const name = (child.name || "").toLowerCase();
                     if (name.includes("wheel") || name.includes("caster")) {
                         wheels.push(child);
                     }
@@ -525,7 +519,7 @@ function setupScrollAnimations(model, originalPositions, wheels) {
             start: "top top",
             end: "bottom bottom",
             scrub: 0.5,
-            pin: ".tech-sticky-viewer"
+            pin: true
         }
     });
 
