@@ -88,7 +88,22 @@ function initHeroScene() {
     loader.load("assets/models/NMD-305.glb", 
         (gltf) => {
             heroModel = gltf.scene;
-            console.log(heroModel);
+           console.log("MODEL", heroModel);
+
+const box = new THREE.Box3().setFromObject(heroModel);
+
+console.log("MIN", box.min);
+console.log("MAX", box.max);
+
+const size = new THREE.Vector3();
+box.getSize(size);
+
+console.log("SIZE", size);
+
+const center = new THREE.Vector3();
+box.getCenter(center);
+
+console.log("CENTER", center);
             
                     
             // Adjust position and rotation
