@@ -114,7 +114,7 @@ heroModel.rotation.set(0,0,0);
 heroModel.scale.set(10,10,10);
             // Center model
 
-const center = box.getCenter(new THREE.Vector3());
+const center = box.getCenter(new THREE.Vector3();
 // heroModel.position.sub(center);
             // Shadow mapping and material tuning
             heroModel.traverse((child) => {
