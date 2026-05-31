@@ -13,14 +13,29 @@ const colorNamesMap = {
 document.addEventListener("DOMContentLoaded", () => {
     // 1. Navigation Scroll Effect
     const header = document.getElementById("main-header");
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 50) {
-            header.classList.add("scrolled");
-        } else {
-            header.classList.remove("scrolled");
-        }
-        updateActiveNavLink();
-    });
+    let ticking = false;
+
+window.addEventListener("scroll", () => {
+
+    if (!ticking) {
+
+        requestAnimationFrame(() => {
+
+            if (window.scrollY > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+
+            updateActiveNavLink();
+
+            ticking = false;
+
+        });
+
+        ticking = true;
+    }
+});
 
     // 2. Active Nav Link Highlighter
     const navLinks = document.querySelectorAll(".nav-links a");
