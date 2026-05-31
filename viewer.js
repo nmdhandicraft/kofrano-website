@@ -48,7 +48,7 @@ function initHeroScene() {
 
     // Camera
     heroCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-    heroCamera.position.set(0, 2, 25);
+    heroCamera.position.set(0, 0, 100);
 
     // Renderer
     heroRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -96,11 +96,11 @@ function initHeroScene() {
 
 heroModel.rotation.set(0,0,0);
 
-heroModel.scale.set(1,1,1);
+heroModel.scale.set(10,10,10);
             // Center model
 const box = new THREE.Box3().setFromObject(heroModel);
 const center = box.getCenter(new THREE.Vector3());
-heroModel.position.sub(center);
+// heroModel.position.sub(center);
             // Shadow mapping and material tuning
             heroModel.traverse((child) => {
                 if (child.isMesh) {
