@@ -127,7 +127,7 @@ function initHeroScene() {
 
     // Renderer
     heroRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    heroRenderer.setPixelRatio(1);
     heroRenderer.setSize(container.clientWidth, container.clientHeight);
     heroRenderer.shadowMap.enabled = true;
     heroRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -147,8 +147,8 @@ function initHeroScene() {
     const mainLight = new THREE.DirectionalLight(0xffffff, 2.5);
     mainLight.position.set(5, 8, 5);
     mainLight.castShadow = true;
-    mainLight.shadow.mapSize.width = 2048;
-    mainLight.shadow.mapSize.height = 2048;
+    mainLight.shadow.mapSize.width = 1024;
+    mainLight.shadow.mapSize.height = 1024;
     mainLight.shadow.bias = -0.0001;
     heroScene.add(mainLight);
 
@@ -328,7 +328,7 @@ function initConfigScene() {
 
     // Renderer
     configRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    configRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    configRenderer.setPixelRatio(1);
     configRenderer.setSize(container.clientWidth, container.clientHeight);
     configRenderer.shadowMap.enabled = true;
     configRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -540,7 +540,7 @@ function initTechScene() {
 
     // Renderer
     techRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    techRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    techRenderer.setPixelRatio(1);
     techRenderer.setSize(container.clientWidth, container.clientHeight);
     techRenderer.shadowMap.enabled = true;
     techRenderer.toneMapping = THREE.ACESFilmicToneMapping;
