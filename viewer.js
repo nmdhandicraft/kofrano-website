@@ -90,8 +90,9 @@ function hideLoading(loaderEl) {
 // Initialization
 document.addEventListener("DOMContentLoaded", () => {
     initHeroScene();
-    initConfigScene();
-    initTechScene();
+
+    // initConfigScene();
+    // initTechScene();
     
     // Add window resize listener
     window.addEventListener("resize", onWindowResize);
@@ -122,7 +123,12 @@ function initHeroScene() {
     heroScene.fog = new THREE.FogExp2(0x030303, 0.04);
 
     // Camera
-    heroCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+    heroCamera = new THREE.PerspectiveCamera(
+    45,
+    container.clientWidth / container.clientHeight,
+    0.5,
+    50
+);
     heroCamera.position.set(0, 0.5, 6);
 
     // Renderer
@@ -323,7 +329,12 @@ function initConfigScene() {
     configScene = new THREE.Scene();
 
     // Camera
-    configCamera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 100);
+    configCamera = new THREE.PerspectiveCamera(
+    40,
+    container.clientWidth / container.clientHeight,
+    0.5,
+    50
+);
     configCamera.position.set(0, 0, 5.5);
 
     // Renderer
@@ -535,7 +546,12 @@ function initTechScene() {
     techScene = new THREE.Scene();
 
     // Camera
-    techCamera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 100);
+    techCamera = new THREE.PerspectiveCamera(
+    40,
+    container.clientWidth / container.clientHeight,
+    0.5,
+    50
+);
     techCamera.position.set(0, 0, 5.0);
 
     // Renderer
